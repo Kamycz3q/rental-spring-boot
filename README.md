@@ -1,9 +1,11 @@
-###Wypożyczalnia
+### Wypożyczalnia pojazdów
+
+# Struktura
 
 User
 - Dodawanie i usuwanie użytkownika
 - modyfikacja emailu, imienia, nazwiska
-- historia wypozyczen
+- historia wypozyczen pojazdow
 
 Pojazd
 - marka
@@ -11,7 +13,7 @@ Pojazd
 - rocznik
 - nr. Tablicy rejestracyjnej
 - kategoria
-- czy jest wypozyczony 
+
 
 Wypożyczenie
 - okres
@@ -19,3 +21,7 @@ Wypożyczenie
 - dla jakiego użytkownika
 - jaki pojazd
 - czy jest aktywne (opcjonalnie)
+- status wypozyczenia
+- czy jest opłacone?
+
+# API Endpointsy
