@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5332/rental
     username: root
-    password: kamilek123
+    password: password
   jpa:
     hibernate:
       ddl-auto: create
