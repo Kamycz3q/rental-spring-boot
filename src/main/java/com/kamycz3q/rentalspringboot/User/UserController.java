@@ -10,7 +10,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
-    private UserService userService;
+    private final UserService userService;
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
@@ -48,6 +48,7 @@ public class UserController {
         userService.DeleteUser(id);
     }
 
+    //updateowanie uzytkownika
     public record UpdateUserRequest(
             String name,
             String surname,

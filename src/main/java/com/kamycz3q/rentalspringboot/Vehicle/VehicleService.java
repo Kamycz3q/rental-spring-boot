@@ -8,19 +8,22 @@ import java.util.Optional;
 
 @Service
 public class VehicleService {
-    private VehicleRepository vehicleRepository;
+    private final VehicleRepository vehicleRepository;
 
     @Autowired
     public VehicleService(VehicleRepository vehicleRepository) {
         this.vehicleRepository = vehicleRepository;
     }
 
+    //listowanie pojazdow
     public List<Vehicle> ListVehicles() {
         return vehicleRepository.findAll();
     }
+    //dane o pojezdzie o podanym id
     public Optional<Vehicle> GetVehicleById(String id) {
         return vehicleRepository.findById(Integer.parseInt(id));
     }
+    //dodwanie pojazdu
     public void AddVehicle(String make, String model, Integer year, String plate, String category) {
         Vehicle vehicle = new Vehicle();
         vehicle.setMake(make);
@@ -30,6 +33,7 @@ public class VehicleService {
         vehicle.setCategory(category);
         vehicleRepository.save(vehicle);
     }
+    //updateowanie pojazdu
     public void UpdateVehicle(String id, String make, String model, Integer year, String plate, String category) {
         Vehicle vehicle = new Vehicle();
         vehicle.setId(Integer.parseInt(id));
@@ -41,6 +45,7 @@ public class VehicleService {
         vehicleRepository.save(vehicle);
     }
 
+    //zmiana statusu wypozyczenia pojazdu
     public void ChangeVehicleState(String id, Boolean state) {
         Optional<Vehicle> vehicle = vehicleRepository.findById(Integer.parseInt(id));
         vehicle.ifPresent(veh -> {
@@ -48,5 +53,9 @@ public class VehicleService {
             vehicleRepository.save(veh);
         });
 
+    }
+    //usuwanie pojazdu
+    public void DeleteVehicle(String id) {
+        vehicleRepository.deleteById(Integer.parseInt(id));
     }
 }

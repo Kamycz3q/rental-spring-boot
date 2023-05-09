@@ -9,7 +9,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/vehicles")
 public class VehicleController {
-    private VehicleService vehicleService;
+    private final VehicleService vehicleService;
 
     @Autowired
     public VehicleController(VehicleService vehicleService) {
@@ -53,15 +53,20 @@ public class VehicleController {
                 createVehicleRequest.category()
         );
     }
+    //zmiana statusu pojazdu
     @PatchMapping("/{id}/{state}")
     public void ChangeVehicleState(@PathVariable(name = "id") String id, @PathVariable(name = "state") String state) {
-        boolean stateboolean;
-        if (state == "0") {
+        boolean stateboolean = true;
+        if (state.equals("0")) {
             stateboolean = false;
-        } else {
-            stateboolean = true;
         }
         vehicleService.ChangeVehicleState(id, stateboolean);
+    }
+
+    //usuwanie pojazdu
+    @DeleteMapping("/{id}")
+    public void DeleteVehicle(@PathVariable (name = "id") String id) {
+        vehicleService.DeleteVehicle(id);
     }
 
 }
