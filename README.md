@@ -25,3 +25,4 @@ Wypożyczenie
 - czy jest opłacone?
 
 # API Endpointsy
+https://excalidraw.com/#json=N7-l3prCeHTOISIyQdM_l,3VLaUizcHn4CTO5q8NRItA
