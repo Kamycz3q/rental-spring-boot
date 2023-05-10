@@ -33,8 +33,8 @@ public class VehicleController {
             String category
     ) { }
     @PostMapping
-    public void CreateVehicle(@RequestBody CreateVehicleRequest createVehicleRequest) {
-        vehicleService.AddVehicle(
+    public Vehicle CreateVehicle(@RequestBody CreateVehicleRequest createVehicleRequest) {
+         return vehicleService.AddVehicle(
                 createVehicleRequest.make(),
                 createVehicleRequest.model(),
                 createVehicleRequest.year(),
@@ -43,8 +43,8 @@ public class VehicleController {
         );
     }
     @PatchMapping("/{id}")
-    public void UpdateVehicle(@PathVariable(name = "id") String id,@RequestBody CreateVehicleRequest createVehicleRequest) {
-        vehicleService.UpdateVehicle(
+    public Vehicle UpdateVehicle(@PathVariable(name = "id") String id,@RequestBody CreateVehicleRequest createVehicleRequest) {
+        return vehicleService.UpdateVehicle(
                 id,
                 createVehicleRequest.make(),
                 createVehicleRequest.model(),
@@ -55,18 +55,18 @@ public class VehicleController {
     }
     //zmiana statusu pojazdu
     @PatchMapping("/{id}/{state}")
-    public void ChangeVehicleState(@PathVariable(name = "id") String id, @PathVariable(name = "state") String state) {
+    public boolean ChangeVehicleState(@PathVariable(name = "id") String id, @PathVariable(name = "state") String state) {
         boolean stateboolean = true;
         if (state.equals("0")) {
             stateboolean = false;
         }
-        vehicleService.ChangeVehicleState(id, stateboolean);
+        return vehicleService.ChangeVehicleState(id, stateboolean);
     }
 
     //usuwanie pojazdu
     @DeleteMapping("/{id}")
-    public void DeleteVehicle(@PathVariable (name = "id") String id) {
-        vehicleService.DeleteVehicle(id);
+    public boolean DeleteVehicle(@PathVariable (name = "id") String id) {
+        return vehicleService.DeleteVehicle(id);
     }
 
 }

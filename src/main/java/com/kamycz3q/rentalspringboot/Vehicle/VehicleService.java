@@ -1,5 +1,6 @@
 package com.kamycz3q.rentalspringboot.Vehicle;
 
+import com.kamycz3q.rentalspringboot.Exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +22,13 @@ public class VehicleService {
     }
     //dane o pojezdzie o podanym id
     public Optional<Vehicle> GetVehicleById(String id) {
-        return vehicleRepository.findById(Integer.parseInt(id));
+        if (!vehicleRepository.existsById(Integer.valueOf(id))) {
+            throw new ApiRequestException("Vehicle with id " + id + " doesn't exist!");
+        }
+        return vehicleRepository.findById(Integer.valueOf(id));
     }
     //dodwanie pojazdu
-    public void AddVehicle(String make, String model, Integer year, String plate, String category) {
+    public Vehicle AddVehicle(String make, String model, Integer year, String plate, String category) {
         Vehicle vehicle = new Vehicle();
         vehicle.setMake(make);
         vehicle.setModel(model);
@@ -32,9 +36,10 @@ public class VehicleService {
         vehicle.setPlate(plate);
         vehicle.setCategory(category);
         vehicleRepository.save(vehicle);
+        return vehicle;
     }
     //updateowanie pojazdu
-    public void UpdateVehicle(String id, String make, String model, Integer year, String plate, String category) {
+    public Vehicle UpdateVehicle(String id, String make, String model, Integer year, String plate, String category) {
         Vehicle vehicle = new Vehicle();
         vehicle.setId(Integer.parseInt(id));
         vehicle.setMake(make);
@@ -43,19 +48,28 @@ public class VehicleService {
         vehicle.setPlate(plate);
         vehicle.setCategory(category);
         vehicleRepository.save(vehicle);
+        return vehicle;
     }
 
     //zmiana statusu wypozyczenia pojazdu
-    public void ChangeVehicleState(String id, Boolean state) {
-        Optional<Vehicle> vehicle = vehicleRepository.findById(Integer.parseInt(id));
+    public boolean ChangeVehicleState(String id, Boolean state) {
+        Optional<Vehicle> vehicle = vehicleRepository.findById(Integer.valueOf(id));
+        if (!vehicleRepository.existsById(Integer.valueOf(id))) {
+            throw new ApiRequestException("Vehicle with id " + id + " doesn't exists!");
+        }
         vehicle.ifPresent(veh -> {
             veh.setRented(state);
             vehicleRepository.save(veh);
         });
+        return true;
 
     }
     //usuwanie pojazdu
-    public void DeleteVehicle(String id) {
-        vehicleRepository.deleteById(Integer.parseInt(id));
+    public boolean DeleteVehicle(String id) {
+        if (!vehicleRepository.existsById(Integer.valueOf(id))) {
+            throw new ApiRequestException("Vehicle with id " + id + " doesn't exist");
+        }
+        vehicleRepository.deleteById(Integer.valueOf(id));
+        return true;
     }
 }

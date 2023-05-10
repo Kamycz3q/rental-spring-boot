@@ -1,5 +1,6 @@
 package com.kamycz3q.rentalspringboot.User;
 
+import com.kamycz3q.rentalspringboot.Exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,30 +22,43 @@ public class UserService {
     }
     //dane uzytkownika o podanym id
     public Optional<User> GetUser(String id) {
-        return  userRepository.findById(Integer.parseInt(id));
+        if (userRepository.existsById(Integer.valueOf(id))) {
+            return  userRepository.findById(Integer.parseInt(id));
+        } else {
+            throw new ApiRequestException("User with id " + id + " doesn't exists");
+        }
     }
     //tworzenie uzytkownika
-    public void CreateUser(String name, String surname, String email) {
+    public User CreateUser(String name, String surname, String email) {
         User newUser = new User();
         newUser.setName(name);
         newUser.setSurname(surname);
         newUser.setEmail(email);
         userRepository.save(newUser);
+        return newUser;
     }
 
     //usuwanie uzytkownika
-    public void DeleteUser(String id) {
+    public boolean DeleteUser(String id) {
+        if (!userRepository.existsById(Integer.valueOf(id))) {
+            throw new ApiRequestException("User with id " + id + " doesn't exists");
+        }
         userRepository.deleteById(Integer.parseInt(id));
+        return true;
 
     }
     //updateowanie uzytkownika
-    public void UpdateUser(String id, String name, String surname, String email) {
+    public User UpdateUser(String id, String name, String surname, String email) {
+        if (!userRepository.existsById(Integer.valueOf(id))) {
+            throw new ApiRequestException("User with id " + id + " doesn't exists");
+        }
         User user = new User();
         user.setId(Integer.parseInt(id));
         user.setName(name);
         user.setSurname(surname);
         user.setEmail(email);
         userRepository.save(user);
+        return user;
 
     }
 }

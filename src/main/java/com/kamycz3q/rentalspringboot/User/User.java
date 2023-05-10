@@ -17,15 +17,15 @@ public class User {
             strategy = GenerationType.SEQUENCE,
             generator = "users_seq"
     )
-    private Integer id;
+    private int id;
     private String name, surname;
     private String email;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

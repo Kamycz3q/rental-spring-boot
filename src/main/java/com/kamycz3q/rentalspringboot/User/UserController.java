@@ -1,6 +1,8 @@
 package com.kamycz3q.rentalspringboot.User;
 
 
+import com.kamycz3q.rentalspringboot.Rental.Rental;
+import com.kamycz3q.rentalspringboot.Rental.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +13,11 @@ import java.util.Optional;
 @RequestMapping("/api/v1/users")
 public class UserController {
     private final UserService userService;
+    private final RentalService rentalService;
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, RentalService rentalService) {
         this.userService = userService;
+        this.rentalService = rentalService;
     }
 
     //listowanie uzytkownikow
@@ -34,8 +38,8 @@ public class UserController {
             String email
     ){}
     @PostMapping
-    public void CreateUser(@RequestBody CreateUserRequest addUserRequest) {
-        userService.CreateUser(
+    public User CreateUser(@RequestBody CreateUserRequest addUserRequest) {
+        return userService.CreateUser(
                 addUserRequest.name(),
                 addUserRequest.surname(),
                 addUserRequest.email()
@@ -44,8 +48,8 @@ public class UserController {
 
     //deletowanie uzytkownika
     @DeleteMapping("/{id}")
-    public void DeleteUser(@PathVariable(name = "id") String id) {
-        userService.DeleteUser(id);
+    public boolean DeleteUser(@PathVariable(name = "id") String id) {
+        return userService.DeleteUser(id);
     }
 
     //updateowanie uzytkownika
@@ -55,13 +59,18 @@ public class UserController {
             String email
     ) {}
     @PatchMapping("/{id}")
-    public void UpdateUser(@PathVariable(name = "id") String id, @RequestBody UpdateUserRequest updateUserRequest) {
-        userService.UpdateUser(
+    public User UpdateUser(@PathVariable(name = "id") String id, @RequestBody UpdateUserRequest updateUserRequest) {
+        return userService.UpdateUser(
                 id,
                 updateUserRequest.name(),
                 updateUserRequest.surname(),
                 updateUserRequest.email()
         );
+    }
+
+    @GetMapping("/rentals/{id}")
+    public List<Rental> GetRentals(@PathVariable(name = "id") String userId) {
+        return rentalService.GetRentalsForUserId(userId);
     }
 
 
