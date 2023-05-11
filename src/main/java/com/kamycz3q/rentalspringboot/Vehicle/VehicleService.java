@@ -21,11 +21,12 @@ public class VehicleService {
         return vehicleRepository.findAll();
     }
     //dane o pojezdzie o podanym id
-    public Optional<Vehicle> GetVehicleById(String id) {
-        if (!vehicleRepository.existsById(Integer.valueOf(id))) {
+    public Vehicle GetVehicleById(String id) {
+        Optional<Vehicle> optionalVehicle = vehicleRepository.findById(Integer.valueOf(id));
+        if (!optionalVehicle.isPresent()) {
             throw new ApiRequestException("Vehicle with id " + id + " doesn't exist!");
         }
-        return vehicleRepository.findById(Integer.valueOf(id));
+        return optionalVehicle.get();
     }
     //dodwanie pojazdu
     public Vehicle AddVehicle(String make, String model, Integer year, String plate, String category) {
@@ -40,8 +41,11 @@ public class VehicleService {
     }
     //updateowanie pojazdu
     public Vehicle UpdateVehicle(String id, String make, String model, Integer year, String plate, String category) {
-        Vehicle vehicle = new Vehicle();
-        vehicle.setId(Integer.parseInt(id));
+        Optional<Vehicle> optionalVehicle = vehicleRepository.findById(Integer.valueOf(id));
+        if (!optionalVehicle.isPresent()) {
+            throw new ApiRequestException("Vehicle with id " + id + " doesn't exist!");
+        }
+        Vehicle vehicle = optionalVehicle.get();
         vehicle.setMake(make);
         vehicle.setModel(model);
         vehicle.setYear(year);

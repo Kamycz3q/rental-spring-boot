@@ -21,12 +21,14 @@ public class UserService {
         return userRepository.findAll();
     }
     //dane uzytkownika o podanym id
-    public Optional<User> GetUser(String id) {
-        if (userRepository.existsById(Integer.valueOf(id))) {
-            return  userRepository.findById(Integer.parseInt(id));
-        } else {
+    public User GetUser(String id) {
+        Optional<User> optionalUser = userRepository.findById(Integer.valueOf(id));
+        if (!optionalUser.isPresent()) {
             throw new ApiRequestException("User with id " + id + " doesn't exists");
+
         }
+        return optionalUser.get();
+
     }
     //tworzenie uzytkownika
     public User CreateUser(String name, String surname, String email) {
@@ -40,19 +42,21 @@ public class UserService {
 
     //usuwanie uzytkownika
     public boolean DeleteUser(String id) {
-        if (!userRepository.existsById(Integer.valueOf(id))) {
+        Optional<User> optionalUser = userRepository.findById(Integer.valueOf(id));
+        if (!optionalUser.isPresent()) {
             throw new ApiRequestException("User with id " + id + " doesn't exists");
         }
-        userRepository.deleteById(Integer.parseInt(id));
+        userRepository.deleteById(Integer.valueOf(id));
         return true;
 
     }
     //updateowanie uzytkownika
     public User UpdateUser(String id, String name, String surname, String email) {
-        if (!userRepository.existsById(Integer.valueOf(id))) {
+        Optional<User> optionalUser = userRepository.findById(Integer.valueOf(id));
+        if (!optionalUser.isPresent()) {
             throw new ApiRequestException("User with id " + id + " doesn't exists");
         }
-        User user = new User();
+        User user = optionalUser.get();
         user.setId(Integer.parseInt(id));
         user.setName(name);
         user.setSurname(surname);

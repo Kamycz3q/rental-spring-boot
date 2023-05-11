@@ -21,7 +21,7 @@ public class VehicleController {
         return vehicleService.ListVehicles();
     }
     @GetMapping("/{id}")
-    public Optional<Vehicle> GetVehicle(@PathVariable(name = "id") String id) {
+    public Vehicle GetVehicle(@PathVariable(name = "id") String id) {
         return vehicleService.GetVehicleById(id);
     }
 

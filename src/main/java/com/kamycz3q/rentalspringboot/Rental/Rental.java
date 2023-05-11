@@ -18,9 +18,21 @@ public class Rental {
             strategy = GenerationType.SEQUENCE
     )
     private int id;
-    private int ownerId, vehicleId;
+    private int ownerId;
+    private int vehicleId;
+
+    private int workerId;
     private Timestamp periodStart, periodEnd;
     private boolean state;
+
+    public int getWorkerId() {
+        return workerId;
+    }
+
+    public void setWorkerId(int workerId) {
+        this.workerId = workerId;
+    }
+
 
     public int getId() {
         return id;

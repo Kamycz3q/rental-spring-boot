@@ -278,4 +278,49 @@ true
 ```json
 true
 ```
-https://excalidraw.com/#json=N7-l3prCeHTOISIyQdM_l,3VLaUizcHn4CTO5q8NRItA
+---
+## Worker (Pracownik)
+
+
+`GET` `/api/v1/workers` -> **Returns workers List**
+
+
+---
+
+`GET` `/api/v1/workers/{workerId}` -> **Returns worker object with specified id**
+
+---
+
+`POST` `/api/v1/workers` -> **Creates new worker object with same request body as user**
+
+---
+
+`DELETE` `/api/v1/workers/{workerId}` -> **Delete worker with specified id**
+
+---
+
+`PATCH` `/api/v1/workers/{workerId}` -> **Updates worker Data with new body**
+
+---
+
+## Worker Logs (Logi pracownika)
+### !!! Log for renting is added automatically when worker creates rent !!!
+
+`GET` `/api/v1/workers/logs/{workerId}` -> **Get logs for worker**
+
+---
+
+`DELETE` `/api/v1/workers/logs/{logId}` -> **Delete log with speicfied id**
+
+---
+
+`POST` `/api/v1/workers/logs` -> **Create log with request body**
+
+**Request Body**
+```json
+{
+  "workerId": 1,
+  "actionDescription": "TestDescription"
+}
+```
+

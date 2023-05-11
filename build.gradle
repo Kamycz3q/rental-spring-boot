@@ -19,6 +19,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// https://mvnrepository.com/artifact/org.assertj/assertj-core
+	testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.24.2'
+
 }
 
 tasks.named('test') {

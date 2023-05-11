@@ -19,6 +19,7 @@ public class RentalController {
     record CreateRentalRequest(
             int ownerId,
             int vehicleId,
+            int workerId,
             long timestampStart,
             long timestampEnd
     ) {
@@ -29,6 +30,7 @@ public class RentalController {
         return rentalService.CreateRental(
                 createRentalRequest.ownerId(),
                 createRentalRequest.vehicleId(),
+                createRentalRequest.workerId(),
                 createRentalRequest.timestampStart(),
                 createRentalRequest.timestampEnd()
         );
@@ -68,7 +70,7 @@ public class RentalController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Rental> GetRental(@PathVariable(name = "id") String rentalId) {
+    public Rental GetRental(@PathVariable(name = "id") String rentalId) {
         return rentalService.GetRental(rentalId);
     }
 }

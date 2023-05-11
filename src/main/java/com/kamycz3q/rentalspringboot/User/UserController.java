@@ -26,7 +26,7 @@ public class UserController {
         return userService.ListUsers();
     }
     @GetMapping("/{id}")
-    public Optional<User> GetUser(@PathVariable(name = "id") String id) {
+    public User GetUser(@PathVariable(name = "id") String id) {
         return userService.GetUser(id);
     }
 
