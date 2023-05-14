@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 public class PaymentService {
 
     public void pay(Payment payment) {
-    
+        return;
     }
 }
