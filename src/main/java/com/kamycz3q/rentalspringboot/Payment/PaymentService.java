@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class PaymentService {
 
-    public void pay(Payment payment) {
-        return;
+    private final String JAKIES_TAM_POLE = "jakas wartosc";
+
+    public String pay(Payment payment) {
+        return JAKIES_TAM_POLE;
     }
 }
